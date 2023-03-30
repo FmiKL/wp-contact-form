@@ -26,6 +26,9 @@ $message_cases = Message::cases();
 $option = new Option( SFC_CONTACT_PATH, $error_cases, $message_cases );
 $option->init();
 
+register_activation_hook( __FILE__, array( $option, 'save_settings' ) );
+register_deactivation_hook( __FILE__, array( $option, 'delete_settings' ) );
+
 $form = new Form( SFC_CONTACT_PATH, SFC_CONTACT_URL );
 $form->init();
 

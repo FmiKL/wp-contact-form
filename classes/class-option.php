@@ -64,6 +64,33 @@ class Option {
     }
 
     /**
+     * Save default settings to database.
+     *
+     * @return void
+     */
+    public function save_settings() {
+        foreach ( $this->message_cases as $message ) {
+            add_option( $message->value, $message->info() );
+        }
+
+        foreach ( $this->error_cases as $error ) {
+            add_option( $error->value, $error->message() );
+        }
+    }
+
+    /**
+     * Delete settings that have been
+     * saved to database.
+     *
+     * @return void
+     */
+    public function delete_settings() {
+        foreach ( $this->get_setting_keys() as $key ) {
+            delete_option( $key );
+        }
+    }
+
+    /**
      * Register the configuration settings
      * that will be used.
      *
