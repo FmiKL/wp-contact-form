@@ -1,0 +1,7 @@
+#contact-loader {
+    display: none;
+}
+
+#contact-loader.active {
+    display: block;
+}
