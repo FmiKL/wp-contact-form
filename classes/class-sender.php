@@ -7,6 +7,11 @@ namespace Mf\SFC_Contact;
  */
 class Sender {
     /**
+     * The receiver key.
+     */
+    public const RECEIVER_KEY = 'contact_mail_receiver';
+
+    /**
      * The nonce key.
      */
     public const NONCE_KEY = '_contact_nonce_field';
