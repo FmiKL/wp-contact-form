@@ -1,5 +1,8 @@
 <!-- Contact -->
 <form id="contact-form">
+    <!-- Nonce -->
+    <?php wp_nonce_field( 'contact', Mf\SFC_Contact\Sender::NONCE_KEY ); ?>
+
     <!-- Fields -->
     <div>
         <label for="input-name">Name</label>
