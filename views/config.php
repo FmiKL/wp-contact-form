@@ -13,6 +13,26 @@
                     <input name="<?php echo $receiver_key; ?>" type="email" id="<?php echo $receiver_key; ?>" value="<?php echo get_option( $receiver_key ); ?>" class="regular-text">
                 </td>
             </tr>
+            <?php foreach ( $this->message_cases as $message ) : ?>
+                <tr>
+                    <th scope="row">
+                        <label for="<?php echo $message->value; ?>"><?php echo $message->label(); ?></label>
+                    </th>
+                    <td>
+                        <input name="<?php echo $message->value; ?>" type="text" id="<?php echo $message->value; ?>" value="<?php echo get_option( $message->value ); ?>" class="regular-text">
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            <?php foreach ( $this->error_cases as $error ) : ?>
+                <tr>
+                    <th scope="row">
+                        <label for="<?php echo $error->value; ?>"><?php echo $error->title(); ?></label>
+                    </th>
+                    <td>
+                        <input name="<?php echo $error->value; ?>" type="text" id="<?php echo $error->value; ?>" value="<?php echo get_option( $error->value ); ?>" class="regular-text">
+                    </td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
         <?php submit_button(); ?>
