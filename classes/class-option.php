@@ -20,9 +20,13 @@ class Option {
      * Constructor.
      *
      * @param string $plugin_path
+     * @param array $error_cases
+     * @param array $message_cases
      */
     public function __construct(
         private $plugin_path,
+        private $error_cases,
+        private $message_cases,
     ){}
 
     /**
@@ -66,6 +70,30 @@ class Option {
      * @return void
      */
     public function register_settings() {
-        register_setting( self::OPTIONS_KEY, Sender::RECEIVER_KEY );
+        foreach ( $this->get_setting_keys() as $key ) {
+            register_setting( self::OPTIONS_KEY, $key );
+        }
+    }
+
+    /**
+     * Get an array containing all
+     * configuration keys.
+     *
+     * @return array
+     */
+    private function get_setting_keys() {
+        $setting_keys = array(
+            Sender::RECEIVER_KEY,
+        );
+
+        foreach ( $this->message_cases as $message ) {
+            $setting_keys[] = $message->value;
+        }
+
+        foreach ( $this->error_cases as $error ) {
+            $setting_keys[] = $error->value;
+        }
+
+        return $setting_keys;
     }
 }
