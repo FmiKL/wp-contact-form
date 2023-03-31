@@ -5,3 +5,11 @@
 #contact-loader.active {
     display: block;
 }
+
+#contact-success {
+    display: none;
+}
+
+#contact-success.show {
+    display: block;
+}
