@@ -3,6 +3,9 @@
     <!-- Nonce -->
     <?php wp_nonce_field( 'contact', Mf\SFC_Contact\Sender::NONCE_KEY ); ?>
 
+    <!-- Boot -->
+    <input type="text" name="required">
+
     <!-- Fields -->
     <div>
         <label for="input-name">Name</label>
