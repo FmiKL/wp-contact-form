@@ -49,7 +49,7 @@ class Sender {
      * @return void
      */
     public function send_handle() {
-		if ( $this->is_invalid_nonce( 'contact', self::NONCE_KEY ) ) {
+		if ( $this->is_boot() || $this->is_invalid_nonce( 'contact', self::NONCE_KEY ) ) {
             $this->http_response_message( 403, array( 'error' => 'Forbidden' ) );
         }
 
@@ -83,6 +83,16 @@ class Sender {
      */
     private function is_invalid_nonce( $key, $nonce ) {
         return ! isset( $this->data[ $nonce ] ) || ! wp_verify_nonce( $this->data[ $nonce ], $key );
+    }
+
+    /**
+     * Return "true" if the hidden field has
+     * not been filled.
+     *
+     * @return boolean
+     */
+    private function is_boot() {
+        return ! empty( $this->data['required'] );
     }
 
     /**
