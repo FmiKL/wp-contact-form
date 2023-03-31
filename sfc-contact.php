@@ -18,6 +18,7 @@ require_once SFC_CONTACT_PATH . 'classes/class-error.php';
 require_once SFC_CONTACT_PATH . 'classes/class-message.php';
 require_once SFC_CONTACT_PATH . 'classes/class-option.php';
 require_once SFC_CONTACT_PATH . 'classes/class-form.php';
+require_once SFC_CONTACT_PATH . 'classes/class-validator.php';
 require_once SFC_CONTACT_PATH . 'classes/class-sender.php';
 
 $error_cases = Error::cases();
@@ -33,6 +34,10 @@ $form = new Form( SFC_CONTACT_PATH, SFC_CONTACT_URL );
 $form->init();
 
 if ( isset( $_POST[ Sender::NONCE_KEY ] ) ) {
-    $sender = new Sender( $_POST );
+    $validator = new Validator( $_POST );
+    $subject = Message::Subject->value;
+    $success = Message::Success->value;
+    
+    $sender = new Sender( $_POST, $validator, $error_cases, $subject, $success );
     $sender->init();
 }

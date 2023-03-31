@@ -53,4 +53,17 @@ enum Error : string {
             self::Message => 'message',
         };
     }
+
+    /**
+     * Return the validator used for the input.
+     *
+     * @return string
+     */
+    public function validator() {
+        return match ( $this ) {
+            self::Name    => 'is_not_empty',
+            self::Email   => 'is_email',
+            self::Message => 'is_not_empty',
+        };
+    }
 }
