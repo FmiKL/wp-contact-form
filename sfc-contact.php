@@ -7,6 +7,7 @@ namespace Mf\SFC_Contact;
  * Description: This plugin offers the possibility to create a contact form on your website with a fully customizable code structure.
  * Author: Mikael Fourré
  * Version: 1.0.0
+ * License: GPLv2
  */
 
 if ( ! function_exists( 'add_action' ) ) exit;
