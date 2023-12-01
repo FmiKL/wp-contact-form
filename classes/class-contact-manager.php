@@ -9,6 +9,8 @@
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Manager {
+    use Contact_Security;
+    
     /**
      * Shortcode for the contact form.
      *
@@ -56,6 +58,7 @@ class Contact_Manager {
      * @since 1.0.0
      */
     public function __construct( $shortcode, $receiver, $data = 'post' ) {
+        $this->set_security_key( $shortcode );
         $this->shortcode = $shortcode;
         $this->receiver  = $receiver;
 
