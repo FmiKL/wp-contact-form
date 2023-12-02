@@ -1,0 +1,49 @@
+.form-contact-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-contact-loader {
+    display: none;
+}
+
+.form-contact-loader.active {
+    display: block;
+}
+
+.form-contact-spinner {
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #eee;
+    border-top-color: #e9b54a;
+    border-radius: 50%;
+    animation: form-contact-spinner 2s linear infinite;
+}
+  
+@keyframes form-contact-spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.form-contact-success {
+    display: none;
+}
+
+.form-contact-success.show {
+    display: block;
+}
+
+input[name=required] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.is-invalid {
+    border-color: #bd4848;
+}
