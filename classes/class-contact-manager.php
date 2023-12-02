@@ -10,7 +10,15 @@
  */
 class Contact_Manager {
     use Contact_Security;
-    
+
+    /**
+     * Hosts that are considered as test mode.
+     * 
+     * @var array
+     * @since 2.0.0
+     */
+    private const TEST_MODE = array( 'localhost', '127.0.0.1' );
+
     /**
      * Shortcode for the contact form.
      *
@@ -112,7 +120,11 @@ class Contact_Manager {
                 'success' => 1,
             );
 
-            $sender->send_to( $this->receiver );
+            if ( $this->is_test_mode() ) {
+                $response['data'] = $sender->send_test();
+            } else {
+                $sender->send_to( $this->receiver );
+            }
 
             $this->http_response_message( 200, $response );
         }
@@ -121,6 +133,16 @@ class Contact_Manager {
             'message' => 'Bad Request',
             'errors'  => $validator->get_errors(),
         ) );
+    }
+
+    /**
+     * Checks if the application is in test mode.
+     * 
+     * @return bool Returns true if the application is in test mode, false otherwise.
+     * @since 2.0.0
+     */
+    private function is_test_mode() {
+        return in_array( $_SERVER['SERVER_NAME'], self::TEST_MODE );
     }
 
     /**
