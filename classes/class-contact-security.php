@@ -55,11 +55,34 @@ trait Contact_Security {
 
     /**
      * Adds the security fields to the form.
+     * 
      * @since 1.0.0
      */
     protected function add_security_fields() {
         wp_nonce_field( $this->action_key, $this->nonce_key );
         echo '<input type="text" name="' . esc_attr( $this->honeypot_key ) . '">';
         echo '<input type="hidden" name="_ajax_key" value="' . esc_attr( $this->ajax_key ) . '">';
+    }
+
+    /**
+     * Checks the security of the form submission.
+     * 
+     * @param array $data Form data to check.
+     * @return bool Returns true if the form submission is secure, false otherwise.
+     * @since 1.0.0
+     */
+    protected function check_security( $data ) {
+        if (
+            ! isset( $data[ $this->nonce_key ] ) ||
+            ! wp_verify_nonce( $data[ $this->nonce_key ], $this->action_key )
+        ) {
+            return false;
+        }
+
+        if ( ! empty( $data[ $this->honeypot_key ] ) ) {
+            return false;
+        }
+
+        return true;
     }
 }

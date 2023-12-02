@@ -1,75 +1,73 @@
 (function () {
-    const form = document.getElementById('contact-form');
-    const submit = document.getElementById('contact-btn');
-    const loader = document.getElementById('contact-loader');
-    const success = document.getElementById('contact-success');
-    const successMessage = document.getElementById('contact-success-message');
+    const forms = document.querySelectorAll('.form-contact');
 
-    let isFormSubmitted = false;
-
-    if (form) {
+    forms.forEach(form => {
+        const ajaxKey = form.querySelector('input[name="_ajax_key"]');
+        const button = form.querySelector('.form-contact-button');
+        const loader = form.querySelector('.form-contact-loader');
+        const success = form.querySelector('.form-contact-success');
+    
+        let isFormSubmitted = false;
+    
         form.addEventListener('submit', handleSubmit);
-    }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+        function handleSubmit(e) {
+            e.preventDefault();
 
-        if (isFormSubmitted) {
-            return;
-        }
-
-        isFormSubmitted = true;
-        setButtonAndLoaderState(true);
-
-        const formData = new FormData(form);
-        formData.append('action', 'sfc_contact_send');
-
-        fetch(admin.ajax, {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(handleResponse)
-        .catch(error => {
-            console.error('An error occurred:', error);
-            alert('An error occurred!');
-            setButtonAndLoaderState(false);
-        })
-        .finally(() => {
-            isFormSubmitted = false;
-        });
-    }
-
-    function handleResponse(data) {
-        setButtonAndLoaderState(false);
-        clearErrorMessages();
-
-        if (data.messages) {
-            setButtonAndLoaderState(false);
-
-            for (const [name, error] of Object.entries(data.messages)) {
-                const message = document.getElementById('contact-error-' + name);
-                message.innerText = error;
+            if (isFormSubmitted) {
+                return;
             }
-        } else if (data.success) {
-            showSuccessMessage(data.success);
+
+            isFormSubmitted = true;
+            
+            success.classList.remove('show');
             setButtonAndLoaderState(true);
-            form.reset();
+
+            const formData = new FormData(form);
+            formData.append('action', ajaxKey.value);
+
+            fetch(form_contact.url, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(handleResponse)
+            .catch(error => {
+                console.error('An error occurred:', error);
+                alert('An error occurred!');
+                setButtonAndLoaderState(false);
+            })
+            .finally(() => {
+                isFormSubmitted = false;
+                setButtonAndLoaderState(false);
+            });
         }
-    }
 
-    function setButtonAndLoaderState(disabled) {
-        submit.disabled = disabled;
-        loader.classList.toggle('active', disabled);
-    }
+        function handleResponse(data) {
+            setButtonAndLoaderState(false);
 
-    function clearErrorMessages() {
-        const errors = document.querySelectorAll('[id^="contact-error-"]');
-        errors.forEach(error => error.textContent = '');
-    }
+            const inputErrors = form.querySelectorAll('.is-invalid');
+            inputErrors.forEach(input => input.classList.remove('is-invalid'));
 
-    function showSuccessMessage(message) {
-        success.classList.add('show');
-        successMessage.innerText = message;
-    }
+            if (data.errors) {
+                setButtonAndLoaderState(false);
+
+                for (const [name, error] of Object.entries(data.errors)) {
+                    const input = form.querySelector('[name="' + name + '"]');
+                    input.classList.add('is-invalid');
+                }
+            } else if (data.success) {
+                success.classList.add('show');
+                setButtonAndLoaderState(true);
+                form.reset();
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        }
+    
+        function setButtonAndLoaderState(disabled) {
+            button.disabled = disabled;
+            loader.classList.toggle('active', disabled);
+        }
+    });
 })();
