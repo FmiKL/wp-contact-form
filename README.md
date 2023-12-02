@@ -4,10 +4,10 @@ This project enables the rapid and easy creation of contact forms for WordPress 
 
 ## Features
 
-**Customizable Fields**: You can add any type of field to the form.
-**Automated Mail Headers**: Using specific fields like `email` and `name` automatically populates the mail headers. Similarly, a `subject` field sets the mail subject automatically.
-**Ajax Management**: The form is fully managed with Ajax, ensuring a responsive and smooth user experience.
-**Flexible Structure and Clean HTML**: The form can have any structure, and the generated HTML is clean, exactly matching what is expected, without any superfluous tags.
+- **Customizable Fields**: You can add any type of field to the form.
+- **Automated Mail Headers**: Using specific fields like `email` and `name` automatically populates the mail headers. Similarly, a `subject` field sets the mail subject automatically.
+- **Ajax Management**: The form is fully managed with Ajax, ensuring a responsive and smooth user experience.
+- **Flexible Structure and Clean HTML**: The form can have any structure, and the generated HTML is clean, exactly matching what is expected, without any superfluous tags.
 
 ## Installation and Setup
 
