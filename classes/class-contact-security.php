@@ -52,4 +52,14 @@ trait Contact_Security {
         $this->action_key = 'send-' . $key;
         $this->ajax_key   = $key . '_send';
     }
+
+    /**
+     * Adds the security fields to the form.
+     * @since 1.0.0
+     */
+    protected function add_security_fields() {
+        wp_nonce_field( $this->action_key, $this->nonce_key );
+        echo '<input type="text" name="' . esc_attr( $this->honeypot_key ) . '">';
+        echo '<input type="hidden" name="_ajax_key" value="' . esc_attr( $this->ajax_key ) . '">';
+    }
 }

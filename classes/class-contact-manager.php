@@ -70,6 +70,16 @@ class Contact_Manager {
     }
 
     /**
+     * Creates the contact form.
+     * 
+     * @since 1.0.0
+     */
+    public function create_form() {
+        $form = new Contact_Form( $this->shortcode, $this->fields, $this->groups );
+        $form->setup();
+    }
+
+    /**
      * Groups the given fields under a wrapper.
      * 
      * @param string $wrapper   Wrapper for the fields. Use %fields for fields insertion.
