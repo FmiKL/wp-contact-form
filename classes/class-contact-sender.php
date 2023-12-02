@@ -79,6 +79,20 @@ class Contact_Sender {
     }
 
     /**
+     * Returns a test email as an array.
+     * 
+     * @return array Test email as an array.
+     * @since 2.0.0
+     */
+    public function send_test() {
+        return array(
+            'Subject: ' . $this->get_subject() . "\n",
+            'Content: ' . $this->get_content() . "\n",
+            'Headers: ' . print_r( $this->get_headers(), true ) . "\n",
+        );
+    }
+
+    /**
      * Returns the headers.
      * 
      * @return array Headers to be used in the email.
