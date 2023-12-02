@@ -70,6 +70,16 @@ class Contact_Manager {
     }
 
     /**
+     * Handles the request.
+     * 
+     * @since 1.0.0
+     */
+    public function handle_request() {
+        add_action( 'wp_ajax_' . $this->ajax_key, array( $this, 'handle' ) );
+        add_action( 'wp_ajax_nopriv_' . $this->ajax_key, array( $this, 'handle' ) );
+    }
+
+    /**
      * Creates the contact form.
      * 
      * @since 1.0.0
@@ -77,6 +87,67 @@ class Contact_Manager {
     public function create_form() {
         $form = new Contact_Form( $this->shortcode, $this->fields, $this->groups );
         $form->setup();
+    }
+
+    /**
+     * Handles the form submission.
+     * 
+     * @since 1.0.0
+     */
+    public function handle() {
+        if ( ! $this->check_security( $this->data ) ) {
+            $this->http_response_message( 403, array( 'message' => 'Forbidden' ) );
+        }
+
+        $data_fields = $this->get_data_fields();
+
+        $validator = new Contact_Validator( $this->data );
+        $validator->check( $data_fields );
+
+        if ( $validator->is_valid() ) {
+            $sender = new Contact_Sender( $data_fields, $this->data );
+
+            $response = array(
+                'message' => 'Success',
+                'success' => 1,
+            );
+
+            $sender->send_to( $this->receiver );
+
+            $this->http_response_message( 200, $response );
+        }
+
+        $this->http_response_message( 400, array(
+            'message' => 'Bad Request',
+            'errors'  => $validator->get_errors(),
+        ) );
+    }
+
+    /**
+     * Sends an HTTP response with a given status code and response body.
+     * 
+     * @param int   $code     HTTP status code to send.
+     * @param array $response Response body to send.
+     * @since 1.0.0
+     */
+    private function http_response_message( $code, $response ) {
+        status_header( $code );
+        echo wp_json_encode( $response );
+        exit;
+    }
+
+    /**
+     * Filters the form fields and returns only the data fields.
+     * 
+     * @return array Data fields to be sent.
+     * @since 2.0.0
+     */
+    private function get_data_fields() {
+        $filtered_fields = array_filter( $this->fields, function ( $field ) {
+            return $field['type'] !== 'group' && $field['type'] !== 'button';
+        } );
+
+        return $filtered_fields;
     }
 
     /**
