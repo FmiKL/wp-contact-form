@@ -221,6 +221,7 @@ class Contact_Manager {
      * @param string $label   Field label. No label elements will be present in the HTML if not provided.
      * @param array  $options Field configuration:
      *                        - required: Is the field required? Defaults to false.
+     *                        - default: Default value for the field. If not provided, the field will be empty.
      *                        - pattern: Regular expression for value checking.
      *                        - wrapper: Custom HTML wrapper. Use %field for field insertion.
      *                        - label_class: CSS class for the label.
