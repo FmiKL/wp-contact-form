@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.0.0
+ * @version 2.1.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Form {
@@ -28,6 +28,14 @@ class Contact_Form {
     private $shortcode;
 
     /**
+     * Options of the contact form.
+     *
+     * @var array<string, string>
+     * @since 2.1.0
+     */
+    private $options;
+
+    /**
      * Fields for add to the contact form.
      * 
      * @var array<string, array>
@@ -47,13 +55,15 @@ class Contact_Form {
 
     /**
      * @param string $shortcode Shortcode for the contact form.
+     * @param array  $options   Options for the contact form.
      * @param array  $fields    Fields for add to the contact form.
      * @param array  $groups    Grouped fields wrapped in a template.
      * @since 2.0.0
      */
-    public function __construct( $shortcode, $fields, $groups ) {
+    public function __construct( $shortcode, $options, $fields, $groups ) {
         $this->set_security_key( $shortcode );
         $this->shortcode = $shortcode;
+        $this->options   = $options;
         $this->fields    = $fields;
         $this->groups    = $groups;
     }
@@ -97,7 +107,7 @@ class Contact_Form {
     public function render() {
         ob_start();
         ?>
-        <form id="<?php echo esc_attr( $this->shortcode ); ?>" class="form-contact">
+        <form id="<?php echo esc_attr( $this->shortcode ); ?>" class="form-contact <?php echo esc_attr( $this->options['class'] ?? '' ); ?>">
             <?php
             $this->add_security_fields();
 
@@ -255,7 +265,13 @@ class Contact_Form {
             <div id="<?php echo $key . '-success'; ?>" class="form-contact-success">&check;</div>
         </button>
         <?php
-        return ob_get_clean();
+        $button_html = ob_get_clean();
+
+        if ( isset( $button['options']['wrapper'] ) ) {
+            $button_html = str_replace( '%button', $button_html, $button['options']['wrapper'] );
+        }
+
+        return $button_html;
     }
 
     /**
