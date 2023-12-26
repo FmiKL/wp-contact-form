@@ -5,7 +5,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.0.0
+ * @version 2.1.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Manager {
@@ -44,6 +44,14 @@ class Contact_Manager {
     private $receiver;
 
     /**
+     * Options of the contact form.
+     *
+     * @var array<string, string>
+     * @since 2.1.0
+     */
+    private $options;
+
+    /**
      * Fields for add to the contact form.
      *
      * @var array<array>
@@ -62,18 +70,32 @@ class Contact_Manager {
     /**
      * @param string $shortcode Shortcode for the contact form.
      * @param string $receiver  Receiver of the contact form.
-     * @param mixed  $data      Data handled by the contact form.
+     * @param array  $options   Options for the form, which can include:
+     *                          - post: If is used, data will be set accordingly. Otherwise, $_POST will be used.
+     *                          - class: CSS class for the form.
      * @since 1.0.0
      */
-    public function __construct( $shortcode, $receiver, $data = 'post' ) {
+    public function __construct( $shortcode, $receiver, $options = array() ) {
         $this->set_security_key( $shortcode );
+        $this->set_options( $options );
+
         $this->shortcode = $shortcode;
         $this->receiver  = $receiver;
+    }
 
-        if ( $data === 'post' ) {
-            $this->data = $_POST;
+    /**
+     * Sets the form options.
+     *
+     * @var array $options Options for the form.
+     * @since 2.1.0
+     */
+    private function set_options( $options ) {
+        $this->options = $options;
+
+        if ( array_key_exists( 'post', $options ) ) {
+            $this->data = $options['post'];
         } else {
-            $this->data = $data;
+            $this->data = $_POST;
         }
     }
 
@@ -93,7 +115,7 @@ class Contact_Manager {
      * @since 1.0.0
      */
     public function create_form() {
-        $form = new Contact_Form( $this->shortcode, $this->fields, $this->groups );
+        $form = new Contact_Form( $this->shortcode, $this->options, $this->fields, $this->groups );
         $form->setup();
     }
 
