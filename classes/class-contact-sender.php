@@ -4,12 +4,12 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.1.0
+ * @version 2.1.1
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Sender {
     /**
-     * Key used to retrieve the name field.
+     * Base key used to retrieve the name field.
      * 
      * @var string
      * @since 2.0.0
@@ -101,14 +101,39 @@ class Contact_Sender {
     private function get_headers() {
         $headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
-        if ( ! empty( $this->data[ self::NAME_FIELD_KEY_USED ] ) && ! empty( $this->data[ self::EMAIL_FIELD_KEY_USED ] ) ) {
-            $name  = str_replace( array( "\r", "\n" ), '', $this->data[ self::NAME_FIELD_KEY_USED ] );
-            $email = str_replace( array( "\r", "\n" ), '', $this->data[ self::EMAIL_FIELD_KEY_USED ] );
-    
-            $headers[] = 'From: ' . $name . ' <' . $email . '>';
+        $name = '';
+        if ( ! empty( $this->data[ 'first' . self::NAME_FIELD_KEY_USED ] ) && ! empty( $this->data[ 'last' . self::NAME_FIELD_KEY_USED ] ) ) {
+            $name = $this->sanitize_data( $this->data[ 'last' . self::NAME_FIELD_KEY_USED ] . ' ' . $this->data[ 'first' . self::NAME_FIELD_KEY_USED ] );
+        } else if ( ! empty( $this->data[ self::NAME_FIELD_KEY_USED ] ) ) {
+            $name = $this->sanitize_data( $this->data[ self::NAME_FIELD_KEY_USED ] );
+        }
+
+        $email = '';
+        if ( ! empty( $this->data[ self::EMAIL_FIELD_KEY_USED ] ) ) {
+            $email = $this->sanitize_data( $this->data[ self::EMAIL_FIELD_KEY_USED ] );
+        }
+
+        $from = 'From: ';
+        if ( $name && $email ) {
+            $headers[] = $from . $name . ' <' . $email . '>';
+        } else if ( $name ) {
+            $headers[] = $from . '<' . $name . '>';
+        } else if ( $email ) {
+            $headers[] = $from . $email;
         }
 
         return $headers;
+    }
+
+    /**
+     * Sanitize data by removing "\r" and "\n".
+     * 
+     * @param string  $data Data to be sanitized.
+     * @return string Sanitized data.
+     * @since 2.1.1
+     */
+    private function sanitize_data($data) {
+        return str_replace( array( "\r", "\n" ), '', $data );
     }
 
     /**
