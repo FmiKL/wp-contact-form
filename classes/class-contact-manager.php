@@ -5,7 +5,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.1.1
+ * @version 2.1.2
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Manager {

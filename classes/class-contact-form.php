@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.1.1
+ * @version 2.1.2
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Form {
@@ -166,7 +166,7 @@ class Contact_Form {
      * @since 2.0.0
      */
     private function render_label( $field, $options ) {
-        $class = $this->get_class_attribute( $options, 'labelClass' );
+        $class = $this->get_class_attribute( $options, 'label_class' );
         ob_start();
         ?>
         <label <?php echo $class; ?> for="<?php echo esc_attr( $this->shortcode . '-' . $field['name'] ); ?>">
