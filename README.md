@@ -62,8 +62,8 @@ function setup_form_contact() {
                 'wrapper'     => '<div class="form-group">%field</div>',
                 'label_class' => 'form-label',
                 'input_class' => 'form-control',
-            ),
-        )
+            )
+        ),
     );
 
     $form->add_field(
@@ -77,7 +77,13 @@ function setup_form_contact() {
         )
     );
 
-    $form->add_button( 'Send', array( 'class' => 'btn btn-primary' ) );
+    $form->add_button(
+        'Send',
+        array(
+            'wrapper' => '<div class="form-group">%button</div>',
+            'class'   => 'btn btn-primary',
+        )
+    );
 
     $form->create_form();
     $form->handle_request();
