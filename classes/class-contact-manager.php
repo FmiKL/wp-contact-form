@@ -5,7 +5,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.1.2
+ * @version 2.2.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Manager {
@@ -34,6 +34,14 @@ class Contact_Manager {
      * @since 1.0.0
      */
     private $data;
+
+    /**
+     * Sender of the contact form.
+     *
+     * @var string
+     * @since 2.2.0
+     */
+    private $sender;
 
     /**
      * Receiver of the contact form.
@@ -69,18 +77,25 @@ class Contact_Manager {
 
     /**
      * @param string $shortcode Shortcode for the contact form.
-     * @param string $receiver  Receiver of the contact form.
+     * @param mixed  $emails    Sender and receiver of the contact form. Can be a string (same sender and receiver) or an array with 'sender' and 'receiver' keys.
      * @param array  $options   Options for the form, which can include:
      *                          - post: If is used, data will be set accordingly. Otherwise, $_POST will be used.
      *                          - class: CSS class for the form.
      * @since 1.0.0
      */
-    public function __construct( $shortcode, $receiver, $options = array() ) {
+    public function __construct( $shortcode, $emails, $options = array() ) {
         $this->set_security_key( $shortcode );
         $this->set_options( $options );
 
         $this->shortcode = $shortcode;
-        $this->receiver  = $receiver;
+
+        if ( is_array( $emails ) ) {
+            $this->sender   = $emails['sender'] ?? '';
+            $this->receiver = $emails['receiver'] ?? '';
+        } else {
+            $this->sender   = $emails;
+            $this->receiver = $emails;
+        }
     }
 
     /**
@@ -143,9 +158,9 @@ class Contact_Manager {
             );
 
             if ( $this->is_test_mode() ) {
-                $response['data'] = $sender->send_test();
+                $response['data'] = $sender->send_test( $this->sender );
             } else {
-                $sender->send_to( $this->receiver );
+                $sender->send_to( $this->sender, $this->receiver );
             }
 
             $this->http_response_message( 200, $response );
