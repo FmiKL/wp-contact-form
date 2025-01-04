@@ -148,6 +148,9 @@ class Contact_Form {
             case 'select':
                 $field_html = $this->render_select_field( $field, $options );
                 break;
+            case 'checkbox':
+                $field_html = $this->render_checkbox_field( $field, $options );
+                break;
             default:
                 $field_html = $this->render_input_field( $field, $options );
                 break;
@@ -258,6 +261,31 @@ class Contact_Form {
     }
 
     /**
+     * Renders a checkbox field.
+     * 
+     * @param array   $field   Field to render a checkbox for.
+     * @param array   $options Options for the checkbox.
+     * @return string HTML for the checkbox.
+     * @since 2.4.0
+     */
+    private function render_checkbox_field( $field, $options ) {
+        $class   = $this->get_class_attribute( $options, 'input_class' );
+        $checked = $this->get_checked_attribute( $options );
+
+        ob_start();
+        ?>
+        <div class="checkbox-wrapper">
+            <input type="checkbox"
+                <?php echo $class; ?>
+                name="<?php echo esc_attr( $field['name'] ); ?>"
+                id="<?php echo esc_attr( $this->shortcode . '-' . $field['name'] ); ?>"
+                <?php echo $checked; ?>>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
+
+    /**
      * Renders a group of fields.
      * 
      * @param array   $group Group of fields to render.
@@ -344,6 +372,17 @@ class Contact_Form {
      */
     private function get_selected_attribute( $options, $value ) {
         return isset( $options['default'] ) && $options['default'] === $value ? 'selected' : '';
+    }
+
+    /**
+     * Get the checked attribute for a checkbox input.
+     *
+     * @param array   $options Options array to look for the default value.
+     * @return string Checked attribute or an empty string.
+     * @since 2.4.0
+     */
+    private function get_checked_attribute( $options ) {
+        return isset( $options['default'] ) && $options['default'] ? 'checked' : '';
     }
     
     /**

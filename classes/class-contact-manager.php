@@ -231,7 +231,7 @@ class Contact_Manager {
     /**
      * Adds a new field to the form.
      * 
-     * @param string $type    Field type (e.g., "text", "email", "tel", "textarea", "select").
+     * @param string $type    Field type (e.g., "text", "email", "tel", "textarea", "select", "checkbox").
      * @param string $name    Field name. If the key is "name" or "email", appropriate headers will be set. If the "subject" key is found, it will be used as the email subject.
      * @param string $label   Field label. No label elements will be present in the HTML if not provided.
      * @param array  $options Field configuration:
