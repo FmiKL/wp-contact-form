@@ -140,12 +140,17 @@ class Contact_Sender {
     private function get_content() {
         $message = '';
         foreach ( $this->fields as $field ) {
-            if ( ! isset( $this->data[ $field['name'] ] ) ) {
+            if ( ! isset( $this->data[ $field['name'] ] ) && $field['type'] !== 'checkbox' ) {
                 throw new Exception( $field['name'] . ' is missing!' );
             }
 
             $label = stripslashes( esc_html( $field['label'] ?? '' ) );
-            $value = stripslashes( esc_html( html_entity_decode( $this->data[ $field['name'] ] ?: '--' ) ) );
+
+            if ( $field['type'] === 'checkbox' ) {
+                $value = $this->data[ $field['name'] ] ?? '' === 'on' ? '&check;' : '&cross;';
+            } else {
+                $value = stripslashes( esc_html( html_entity_decode( $this->data[ $field['name'] ] ?: '_____' ) ) );
+            }
 
             if ( $label ) {
                 $message .= '<p><strong>' . $label . '</strong> ' . $value . '</p>';
