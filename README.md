@@ -29,6 +29,18 @@ function setup_form_contact() {
     $form = new Contact_Manager( 'form-contact', get_option( 'admin_email' ) );
 
     $form->add_field(
+        'select',
+        'contact_method',
+        'How would you like to be contacted?',
+        array(
+            'choices'     => array( 'By Email', 'By Phone' ),
+            'wrapper'     => '<div class="form-group">%field</div>',
+            'label_class' => 'form-label',
+            'input_class' => 'form-select',
+        )
+    );
+
+    $form->add_field(
         'text',
         'name',
         'Name',
@@ -74,6 +86,18 @@ function setup_form_contact() {
             'wrapper'     => '<div class="form-group">%field</div>',
             'label_class' => 'form-label',
             'input_class' => 'form-control',
+        )
+    );
+
+    $form->add_field(
+        'checkbox',
+        'privacy_consent',
+        'I agree to the privacy policy',
+        array(
+            'default'     => false,
+            'wrapper'     => '<div class="form-check">%field</div>',
+            'label_class' => 'form-check-label',
+            'input_class' => 'form-check-input',
         )
     );
 
