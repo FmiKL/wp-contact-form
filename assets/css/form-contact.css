@@ -35,7 +35,8 @@
     display: block;
 }
 
-input[name=required] {
+/* For accessibility, use display: none */
+.form-contact input[name=required] {
     width: 0;
     height: 0;
     overflow: hidden;
@@ -44,6 +45,6 @@ input[name=required] {
     opacity: 0;
 }
 
-.is-invalid {
+.form-contact .is-invalid {
     border-color: #bd4848;
 }
