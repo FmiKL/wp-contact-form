@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.0
+ * @version 2.3.2
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Form {
@@ -89,11 +89,11 @@ class Contact_Form {
         $assets_path_directory_uri = get_template_directory_uri() . self::ASSETS_PATH;
 
         if ( ! wp_style_is( 'form-contact', 'registered' ) ) {
-            wp_enqueue_style( 'form-contact', $assets_path_directory_uri . '/css/form-contact.css' );
+            wp_enqueue_style( 'form-contact', $assets_path_directory_uri . '/css/form-contact.css', array(), null );
         }
 
         if ( ! wp_script_is( 'form-contact', 'registered' ) ) {
-            wp_enqueue_script( 'form-contact', $assets_path_directory_uri . '/js/form-contact.js', array(), false, true );
+            wp_enqueue_script( 'form-contact', $assets_path_directory_uri . '/js/form-contact.js', array(), null, true );
             wp_localize_script( 'form-contact', 'form_contact', array( 'url' => admin_url( 'admin-ajax.php' ) ) );
         }
     }
