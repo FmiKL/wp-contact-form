@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.2
+ * @version 2.3.3
  * @see https://github.com/FmiKL/wp-contact-form
  */
 trait Contact_Security {

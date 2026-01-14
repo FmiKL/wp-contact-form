@@ -5,7 +5,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.2
+ * @version 2.3.3
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Manager {
@@ -145,6 +145,7 @@ class Contact_Manager {
         }
 
         $data_fields = $this->get_data_fields();
+        $this->sanitize_data_fields( $data_fields );
 
         $validator = new Contact_Validator( $this->data );
         $validator->check( $data_fields );
@@ -207,6 +208,65 @@ class Contact_Manager {
         } );
 
         return $filtered_fields;
+    }
+
+    /**
+     * Sanitizes data fields based on their type.
+     *
+     * @param array $fields Fields to sanitize.
+     * @since 2.3.3
+     */
+    private function sanitize_data_fields( $fields ) {
+        foreach ( $fields as $field ) {
+            if ( ! isset( $field['name'] ) ) {
+                continue;
+            }
+
+            $input = $this->data[ $field['name'] ] ?? null;
+            $this->data[ $field['name'] ] = $this->sanitize_field_value( $input, $field );
+        }
+    }
+
+    /**
+     * Sanitizes a field value based on the field type.
+     *
+     * @param mixed $input Input value.
+     * @param array $field Field definition.
+     * @return string Sanitized value.
+     * @since 2.3.3
+     */
+    private function sanitize_field_value( $input, $field ) {
+        if ( is_array( $input ) ) {
+            return '';
+        }
+
+        $type  = $field['type'] ?? 'text';
+        $value = trim( (string) $input );
+
+        switch ( $type ) {
+            case 'checkbox':
+                if ( '' === $value ) {
+                    return '0';
+                }
+                return in_array( $value, array( '1', 'on', 'true' ), true ) ? '1' : '0';
+            case 'email':
+                return sanitize_email( $value );
+            case 'url':
+                return esc_url_raw( $value );
+            case 'number':
+                return is_numeric( $value ) ? $value : '';
+            case 'color':
+                $color = sanitize_hex_color( $value );
+                return $color ? $color : '';
+            case 'textarea':
+                return sanitize_textarea_field( $value );
+            case 'select':
+                $choices = $field['options']['choices'] ?? null;
+                $options = is_array( $choices ) ? array_values( $choices ) : array();
+                return in_array( $value, $options, true ) ? $value : '';
+            default:
+                return sanitize_text_field( $value );
+        }
     }
 
     /**

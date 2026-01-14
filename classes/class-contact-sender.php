@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.2
+ * @version 2.3.3
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Sender {
@@ -147,9 +147,13 @@ class Contact_Sender {
             $label = stripslashes( esc_html( $field['label'] ?? '' ) );
 
             if ( $field['type'] === 'checkbox' ) {
-                $value = $this->data[ $field['name'] ] ?? '' === 'on' ? '&check;' : '&cross;';
+                $checkbox_value = $this->data[ $field['name'] ] ?? '';
+                $is_checked     = in_array( $checkbox_value, array( '1', 'on', true ), true );
+                $value          = $is_checked ? '&check;' : '&cross;';
             } else {
-                $value = stripslashes( esc_html( html_entity_decode( $this->data[ $field['name'] ] ?: '_____' ) ) );
+                $raw_value = $this->data[ $field['name'] ] ?? '';
+                $value     = $raw_value !== '' ? $raw_value : '_____';
+                $value     = stripslashes( esc_html( html_entity_decode( $value ) ) );
             }
 
             if ( $label ) {
