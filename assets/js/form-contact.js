@@ -14,6 +14,7 @@
         function handleSubmit(e) {
             e.preventDefault();
 
+            // Prevent multiple submissions while a request is in flight.
             if (isFormSubmitted) {
                 return;
             }
@@ -26,6 +27,7 @@
             const formData = new FormData(form);
             formData.append('action', ajaxKey.value);
 
+            // Submit through admin-ajax.php and let PHP return JSON errors/success.
             fetch(form_contact.url, {
                 method: 'POST',
                 body: formData,
@@ -45,6 +47,7 @@
         function handleResponse(data) {
             setButtonAndLoaderState(false);
 
+            // Reset previous validation state before applying new errors.
             const inputErrors = form.querySelectorAll('.is-invalid');
             inputErrors.forEach(input => input.classList.remove('is-invalid'));
 

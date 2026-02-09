@@ -1,3 +1,4 @@
+/* Submit button and status indicators */
 .form-contact-button {
     display: flex;
     align-items: center;
@@ -35,7 +36,7 @@
     display: block;
 }
 
-/* For accessibility, use display: none */
+/* Hidden honeypot field used for spam detection */
 .form-contact input[name=required] {
     width: 0;
     height: 0;
