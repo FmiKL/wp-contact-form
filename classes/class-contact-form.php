@@ -294,10 +294,6 @@ class Contact_Form {
      * @since 2.0.0
      */
     private function render_group( $group ) {
-        if ( ! is_array( $group['fields'] ) ) {
-            return '';
-        }
-    
         $group_html = '';
         foreach ( $group['fields'] as $field ) {
             $group_html .= $this->render_field( $field );

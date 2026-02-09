@@ -42,10 +42,6 @@ class Contact_Validator {
      */
     public function check( $fields ) {
         foreach ( $fields as $field ) {
-            if ( ! isset( $field['name'] ) ) {
-                continue;
-            }
-
             $value    = $this->data[ $field['name'] ] ?? null;
             $required = $field['options']['required'] ?? null;
 

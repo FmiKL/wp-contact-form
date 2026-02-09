@@ -218,10 +218,6 @@ class Contact_Manager {
      */
     private function sanitize_data_fields( $fields ) {
         foreach ( $fields as $field ) {
-            if ( ! isset( $field['name'] ) ) {
-                continue;
-            }
-
             $input = $this->data[ $field['name'] ] ?? null;
             $this->data[ $field['name'] ] = $this->sanitize_field_value( $input, $field );
         }
