@@ -266,7 +266,7 @@ class Contact_Form {
      * @param array   $field   Field to render a checkbox for.
      * @param array   $options Options for the checkbox.
      * @return string HTML for the checkbox.
-     * @since 2.4.0
+     * @since 2.3.0
      */
     private function render_checkbox_field( $field, $options ) {
         $class   = $this->get_class_attribute( $options, 'input_class' );
@@ -279,6 +279,7 @@ class Contact_Form {
                 <?php echo $class; ?>
                 name="<?php echo esc_attr( $field['name'] ); ?>"
                 id="<?php echo esc_attr( $this->shortcode . '-' . $field['name'] ); ?>"
+                value="1"
                 <?php echo $checked; ?>>
         </div>
         <?php
@@ -379,7 +380,7 @@ class Contact_Form {
      *
      * @param array   $options Options array to look for the default value.
      * @return string Checked attribute or an empty string.
-     * @since 2.4.0
+     * @since 2.3.0
      */
     private function get_checked_attribute( $options ) {
         return isset( $options['default'] ) && $options['default'] ? 'checked' : '';
