@@ -33,7 +33,6 @@
             .then(response => response.json())
             .then(handleResponse)
             .catch(error => {
-                console.error('An error occurred:', error);
                 alert('An error occurred!');
                 setButtonAndLoaderState(false);
             })
