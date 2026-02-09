@@ -252,7 +252,7 @@ class Contact_Form {
             <?php
             foreach ( $options['choices'] as $choice ) {
                 $selected = $this->get_selected_attribute( $options, $choice );
-                echo sprintf( '<option %s>%s</option>', $selected, esc_html( $choice ) );
+                echo sprintf( '<option value="%s" %s>%s</option>', esc_attr( $choice ), $selected, esc_html( $choice ) );
             }
             ?>
         </select>
