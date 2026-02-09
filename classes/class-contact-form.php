@@ -349,7 +349,7 @@ class Contact_Form {
             $classes = array( $options[ $key ], $default );
             return 'class="' . esc_attr( trim( implode( ' ', $classes ) ) ) . '"';
         }
-        return $default;
+        return $default ? 'class="' . esc_attr( $default ) . '"' : '';
     }
 
     /**
