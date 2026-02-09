@@ -144,7 +144,7 @@ class Contact_Sender {
                 throw new Exception( $field['name'] . ' is missing!' );
             }
 
-            $label = stripslashes( esc_html( $field['label'] ?? '' ) );
+            $label = esc_html( stripslashes( $field['label'] ?? '' ) );
 
             if ( $field['type'] === 'checkbox' ) {
                 $checkbox_value = $this->data[ $field['name'] ] ?? '';
@@ -153,7 +153,7 @@ class Contact_Sender {
             } else {
                 $raw_value = $this->data[ $field['name'] ] ?? '';
                 $value     = $raw_value !== '' ? $raw_value : '_____';
-                $value     = stripslashes( esc_html( html_entity_decode( $value ) ) );
+                $value     = esc_html( stripslashes( html_entity_decode( $value ) ) );
             }
 
             if ( $label ) {
