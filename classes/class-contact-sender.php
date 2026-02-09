@@ -111,9 +111,9 @@ class Contact_Sender {
     }
 
     /**
-     * Sanitize data by removing "\r" and "\n".
+     * Sanitizes data by removing "\r" and "\n".
      * 
-     * @param string  $data Data to be sanitized.
+     * @param string $data Data to be sanitized.
      * @return string Sanitized data.
      * @since 2.1.1
      */

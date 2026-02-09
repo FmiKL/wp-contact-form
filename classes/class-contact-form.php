@@ -15,7 +15,7 @@ class Contact_Form {
      * 
      * @var string
      * @since 2.0.0
-     * @see Option_Page::enqueues_assets()
+     * @see Contact_Form::enqueues_assets()
      */
     private const ASSETS_PATH = '/wp-contact-form/assets';
 
@@ -36,7 +36,7 @@ class Contact_Form {
     private $options;
 
     /**
-     * Fields for add to the contact form.
+     * Fields to add to the contact form.
      * 
      * @var array<string, array>
      * @since 2.0.0
@@ -56,7 +56,7 @@ class Contact_Form {
     /**
      * @param string $shortcode Shortcode for the contact form.
      * @param array  $options   Options for the contact form.
-     * @param array  $fields    Fields for add to the contact form.
+     * @param array  $fields    Fields to add to the contact form.
      * @param array  $groups    Grouped fields wrapped in a template.
      * @since 2.0.0
      */
@@ -332,7 +332,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the class attribute for an HTML element.
+     * Gets the class attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @param string  $key     Key to look for in the options array.
@@ -349,7 +349,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the required attribute for an HTML element.
+     * Gets the required attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @return string Required attribute or an empty string.
@@ -360,7 +360,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the selected attribute for a select option.
+     * Gets the selected attribute for a select option.
      *
      * @param array   $options Options array to look for the default value.
      * @param mixed   $value   Value to compare with the default option.
@@ -372,7 +372,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the checked attribute for a checkbox input.
+     * Gets the checked attribute for a checkbox input.
      *
      * @param array   $options Options array to look for the default value.
      * @return string Checked attribute or an empty string.
@@ -383,7 +383,7 @@ class Contact_Form {
     }
     
     /**
-     * Get the pattern attribute for an HTML element.
+     * Gets the pattern attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @return string Pattern attribute or an empty string.
@@ -394,7 +394,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the rows attribute for an HTML element.
+     * Gets the rows attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @return string Rows attribute or an empty string.
@@ -405,7 +405,7 @@ class Contact_Form {
     }
     
     /**
-     * Get the placeholder attribute for an HTML element.
+     * Gets the placeholder attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @return string Placeholder attribute or an empty string.
@@ -416,7 +416,7 @@ class Contact_Form {
     }
 
     /**
-     * Get the value attribute for an HTML element.
+     * Gets the value attribute for an HTML element.
      *
      * @param array   $options Options array to look for the key.
      * @param string  $type    Type of the HTML element. It can be "input" or "textarea". 

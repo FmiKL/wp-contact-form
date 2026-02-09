@@ -1,6 +1,6 @@
 <?php
 /**
- * Class used to managing the construction of the contact form
+ * Class used to manage the construction of the contact form
  * and the associated request.
  * 
  * @package WP_Contact_Form
@@ -32,6 +32,7 @@ class Contact_Manager {
      *
      * @var array<string, string>
      * @since 1.0.0
+     * @see Contact_Manager::set_options()
      */
     private $data;
 
@@ -60,10 +61,11 @@ class Contact_Manager {
     private $options;
 
     /**
-     * Fields for add to the contact form.
+     * Fields to add to the contact form.
      *
      * @var array<array>
      * @since 2.0.0
+     * @see Contact_Manager::add_field()
      */
     private $fields = array();
 
@@ -72,6 +74,7 @@ class Contact_Manager {
      *
      * @var array<string, array>
      * @since 2.0.0
+     * @see Contact_Manager::group_fields()
      */
     private $groups = array();
 
@@ -101,7 +104,7 @@ class Contact_Manager {
     /**
      * Sets the form options.
      *
-     * @var array $options Options for the form.
+     * @param array $options Options for the form.
      * @since 2.1.0
      */
     private function set_options( $options ) {
