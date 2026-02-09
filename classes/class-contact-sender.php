@@ -148,7 +148,7 @@ class Contact_Sender {
 
             if ( $field['type'] === 'checkbox' ) {
                 $checkbox_value = $this->data[ $field['name'] ] ?? '';
-                $is_checked     = in_array( $checkbox_value, array( '1', 'on', true ), true );
+                $is_checked     = ( $checkbox_value === '1' );
                 $value          = $is_checked ? '&check;' : '&cross;';
             } else {
                 $raw_value = $this->data[ $field['name'] ] ?? '';

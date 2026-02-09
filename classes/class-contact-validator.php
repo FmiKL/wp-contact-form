@@ -203,7 +203,7 @@ class Contact_Validator {
      */
     private function is_checkbox( $key ) {
         $value    = $this->data[ $key ];
-        $is_valid = in_array( $value, array( '0', '1', 'on' ), true );
+        $is_valid = in_array( $value, array( '0', '1' ), true );
         $this->add_error( $key, $is_valid );
 
         return $is_valid;

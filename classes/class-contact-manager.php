@@ -245,10 +245,7 @@ class Contact_Manager {
 
         switch ( $type ) {
             case 'checkbox':
-                if ( '' === $value ) {
-                    return '0';
-                }
-                return in_array( $value, array( '1', 'on', 'true' ), true ) ? '1' : '0';
+                return ( '1' === $value ) ? '1' : '0';
             case 'email':
                 return sanitize_email( $value );
             case 'url':
