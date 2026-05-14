@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.3
+ * @version 2.4.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Validator {
@@ -47,7 +47,7 @@ class Contact_Validator {
 
             if ( $required === true || is_string( $required ) ) {
                 $required_value = is_string( $required ) ? ( $this->data[ $required ] ?? null ) : null;
-                if ( ! $this->has_value( $value ) && ( $required === true || ! $this->has_value( $required_value ) ) ) {
+                if ( ! $this->has_required_value( $field, $value ) && ( $required === true || ! $this->has_value( $required_value ) ) ) {
                     $this->add_error( $field['name'], false );
                     continue;
                 }
@@ -111,6 +111,22 @@ class Contact_Validator {
      */
     private function has_value( $value ) {
         return $value !== null && $value !== '';
+    }
+
+    /**
+     * Checks if a value satisfies a required constraint.
+     *
+     * @param array $field Field definition.
+     * @param mixed $value Value to check.
+     * @return bool True when the required value is present.
+     * @since 2.4.0
+     */
+    private function has_required_value( $field, $value ) {
+        if ( ( $field['type'] ?? null ) === 'checkbox' ) {
+            return $value === '1';
+        }
+
+        return $this->has_value( $value );
     }
 
     /**

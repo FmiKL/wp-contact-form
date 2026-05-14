@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.3
+ * @version 2.4.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Form {
@@ -269,8 +269,9 @@ class Contact_Form {
      * @since 2.3.0
      */
     private function render_checkbox_field( $field, $options ) {
-        $class   = $this->get_class_attribute( $options, 'input_class' );
-        $checked = $this->get_checked_attribute( $options );
+        $class    = $this->get_class_attribute( $options, 'input_class' );
+        $required = $this->get_required_attribute( $options );
+        $checked  = $this->get_checked_attribute( $options );
 
         ob_start();
         ?>
@@ -280,6 +281,7 @@ class Contact_Form {
                 name="<?php echo esc_attr( $field['name'] ); ?>"
                 id="<?php echo esc_attr( $this->shortcode . '-' . $field['name'] ); ?>"
                 value="1"
+                <?php echo $required; ?>
                 <?php echo $checked; ?>>
         </div>
         <?php

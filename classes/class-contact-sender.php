@@ -4,7 +4,7 @@
  * 
  * @package WP_Contact_Form
  * @author Mikael Fourré
- * @version 2.3.3
+ * @version 2.4.0
  * @see https://github.com/FmiKL/wp-contact-form
  */
 class Contact_Sender {

@@ -1,6 +1,6 @@
 # WordPress Contact Form
 
-A lightweight OOP contact form builder for WordPress with Ajax handling.
+An OOP contact form builder for WordPress with Ajax handling.
 
 ## Features
 
