@@ -64,11 +64,12 @@ class Contact_Sender {
      * 
      * @param string $sender Sender of the email.
      * @param string $receiver Email address to send the email to.
+     * @return bool Whether the email was sent successfully.
      * @since 1.0.0
      * @link https://developer.wordpress.org/reference/functions/wp_mail/
      */
     public function send_to( $sender, $receiver ) {
-        wp_mail( $receiver, $this->get_subject(), $this->get_content(), $this->get_headers( $sender ) );
+        return wp_mail( $receiver, $this->get_subject(), $this->get_content(), $this->get_headers( $sender ) );
     }
 
     /**

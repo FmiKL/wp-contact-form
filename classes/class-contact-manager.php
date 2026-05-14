@@ -163,8 +163,8 @@ class Contact_Manager {
 
             if ( $this->is_test_mode() ) {
                 $response['data'] = $sender->send_test( $this->sender );
-            } else {
-                $sender->send_to( $this->sender, $this->receiver );
+            } elseif ( ! $sender->send_to( $this->sender, $this->receiver ) ) {
+                $this->http_response_message( 500, array( 'message' => 'Internal Server Error' ) );
             }
 
             $this->http_response_message( 200, $response );
