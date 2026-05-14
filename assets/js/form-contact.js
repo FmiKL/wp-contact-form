@@ -6,6 +6,10 @@
         const button = form.querySelector('.form-contact-button');
         const loader = form.querySelector('.form-contact-loader');
         const success = form.querySelector('.form-contact-success');
+
+        if (!ajaxKey) {
+            return;
+        }
     
         let isFormSubmitted = false;
     
@@ -21,7 +25,9 @@
 
             isFormSubmitted = true;
             
-            success.classList.remove('show');
+            if (success) {
+                success.classList.remove('show');
+            }
             setButtonAndLoaderState(true);
 
             const formData = new FormData(form);
@@ -54,22 +60,46 @@
             if (data.errors) {
                 setButtonAndLoaderState(false);
 
-                for (const [name, error] of Object.entries(data.errors)) {
-                    const input = form.querySelector('[name="' + name + '"]');
-                    input.classList.add('is-invalid');
-                }
+                Object.keys(data.errors).forEach(name => {
+                    const input = getFormControl(name);
+
+                    if (input) {
+                        input.classList.add('is-invalid');
+                    }
+                });
             } else if (data.success) {
-                success.classList.add('show');
+                if (success) {
+                    success.classList.add('show');
+                }
                 setButtonAndLoaderState(true);
                 form.reset();
             } else {
                 throw new Error('Network response was not ok');
             }
         }
+
+        function getFormControl(name) {
+            const control = form.elements.namedItem(name);
+
+            if (!control) {
+                return null;
+            }
+
+            if (control instanceof Element) {
+                return control;
+            }
+
+            return control[0] || null;
+        }
     
         function setButtonAndLoaderState(disabled) {
-            button.disabled = disabled;
-            loader.classList.toggle('active', disabled);
+            if (button) {
+                button.disabled = disabled;
+            }
+
+            if (loader) {
+                loader.classList.toggle('active', disabled);
+            }
         }
     });
 })();
